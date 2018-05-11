@@ -1,5 +1,4 @@
 var fuse = require('fuse-bindings');
-var FsFuse = require('fs-fuse');
 var Dat = require('dat-node');
 
 

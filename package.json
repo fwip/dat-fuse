@@ -18,9 +18,7 @@
   "license": "ISC",
   "dependencies": {
     "dat-node": "^3.5.8",
-    "fs-fuse": "0.0.0",
-    "fuse-bindings": "^2.11.2",
-    "npm": "^6.0.0"
+    "fuse-bindings": "^2.11.2"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
