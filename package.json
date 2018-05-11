@@ -1,0 +1,29 @@
+{
+  "name": "dat-fuse",
+  "version": "0.0.1",
+  "description": "FUSE mounting for dat",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/fwip/dat-fuse"
+  },
+  "keywords": [
+    "dat",
+    "fuse"
+  ],
+  "author": "Jemma Nelson <jemma.s.nelson@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "dat-node": "^3.5.8",
+    "fs-fuse": "0.0.0",
+    "fuse-bindings": "^2.11.2",
+    "npm": "^6.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-google": "^0.9.1"
+  }
+}
