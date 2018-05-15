@@ -6,6 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": {
+    "dat-fuse": "./index.js"
+  },
   "repository": {
     "type": "git",
     "url": "github.com/fwip/dat-fuse"
@@ -17,6 +20,7 @@
   "author": "Jemma Nelson <jemma.s.nelson@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "commander": "^2.15.1",
     "dat-node": "^3.5.8",
     "fuse-bindings": "^2.11.2"
   },

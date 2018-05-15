@@ -1,34 +1,49 @@
+#!/usr/bin/env node
 var fuse = require('fuse-bindings');
 var Dat = require('dat-node');
+var program = require('commander');
 
+program
+  .version('0.1.0');
 
-var mountPath = process.platform !== 'win32' ? './mnt' : 'M:\\';
-
-var datKey = "778f8d955175c92e4ced5e4f5563f69bfec0c86cc6f670352c457943666fe639";
-var datLocation = "dat_dir";
-
-// Initialize dat, join the network, and if successful mount with FUSE
-Dat(datLocation, {
-  key: datKey,
-  sparse: true,
-}, function(err, dat) {
-  if (err) {
-    console.log("Error! " + err);
-    return;
-  }
-  dat.joinNetwork();
-
-  // Debug notices
-  dat.network.on('connected', function() {
-    console.log("Connected to a peer");
+program
+  .command('mount <dir> <key>')
+  .description('Mount the dat specified by <key> on <dir>.')
+  .action(function(dir, key){
+    var datLocation = "dat_dir/" + key;
+    mountDat(key, dir, datLocation);
   });
 
-  dat.network.on('listening', function() {
-    doMount(dat);
-  });
-});
+program.parse(process.argv);
 
-function doMount(dat) {
+if (program.args.length === 0){
+  program.help();
+}
+
+function mountDat(datKey, mountPath, datLocation) {
+  // Initialize dat, join the network, and if successful mount with FUSE
+  Dat(datLocation, {
+    key: datKey,
+    sparse: true,
+  }, function(err, dat) {
+    if (err) {
+      console.log("Error! " + err);
+      return;
+    }
+    dat.joinNetwork();
+
+    // Debug notices
+    dat.network.on('connected', function() {
+      console.log("Connected to a peer");
+    });
+
+    dat.network.on('listening', function() {
+      doMount(dat, mountPath);
+    });
+  });
+}
+
+function doMount(dat, mountPath) {
 
   // FUSE functions, mostly wrappers around hyperdrive calls
   function readdir(path, cb) {
