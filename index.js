@@ -4,7 +4,7 @@ var Dat = require('dat-node');
 var program = require('commander');
 
 program
-  .version('0.1.0');
+  .version(require('./package.json').version);
 
 program
   .command('mount <dir> <key>')
