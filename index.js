@@ -9,9 +9,10 @@ program
 program
   .command('mount <dir> <key>')
   .description('Mount the dat specified by <key> on <dir>.')
-  .action(function(dir, key){
+  .option('-v, --version <number>', 'Checkout version [number] of this dat')
+  .action(function(dir, key, cmd){
     var datLocation = "dat_dir/" + key;
-    mountDat(key, dir, datLocation);
+    mountDat(key, dir, datLocation, cmd.version);
   });
 
 program.parse(process.argv);
@@ -20,7 +21,7 @@ if (program.args.length === 0){
   program.help();
 }
 
-function mountDat(datKey, mountPath, datLocation) {
+function mountDat(datKey, mountPath, datLocation, version) {
   // Initialize dat, join the network, and if successful mount with FUSE
   Dat(datLocation, {
     key: datKey,
@@ -38,6 +39,9 @@ function mountDat(datKey, mountPath, datLocation) {
     });
 
     dat.network.on('listening', function() {
+      if (version) {
+        dat.archive = dat.archive.checkout(parseInt(version));
+      }
       doMount(dat, mountPath);
     });
   });
@@ -103,6 +107,7 @@ function doMount(dat, mountPath) {
         console.log('filesystem at ' + mountPath + ' unmounted');
       }
     });
+    console.log("Leaving network...");
     dat.close();
   });
 }
